@@ -28,6 +28,7 @@ body {
   padding:0 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
  }
  .buttons button {
   height:50px;
@@ -45,6 +46,8 @@ body {
     font-size: 18px;
     text-align: center;
     height:30px;
+    width:100%;
+    box-sizing: border-box;
   }
   .buttons{
     display: grid;

@@ -2,8 +2,8 @@ import React,{ useState} from "react";
 import "./App.css";
 const evaluteExpression =(expression)=>{
   try {
-    if(!expression) return "Error";
-    const result=Function (`"use strict"; return (${expression})`)();
+    if(!expression) return "0";
+    const result=Function(`"use strict"; return (${expression})`)();
     if(expression === "0/0") return NaN;
     if(result === Infinity || result === -Infinity) return "Infinity";
     return result;
@@ -14,7 +14,7 @@ const evaluteExpression =(expression)=>{
 
  export default function App(){
   const [input,setInput]=useState("");
-  const [result,setResult]=useState("");
+  const [result,setResult]=useState("0");
 
   const appendValue=(value)=>{
     if(input === "" && value === "-"){
@@ -33,7 +33,7 @@ const evaluteExpression =(expression)=>{
   };
   const clearInput=()=>{
     setInput("");
-    setResult("");
+    setResult("0");
   };
   const calculate=()=>{
     if(!input || /[+\-*/]$/.test(input)){
@@ -43,14 +43,14 @@ const evaluteExpression =(expression)=>{
     const output=evaluteExpression(input);
     setResult(output);
   };
-  React.useEffect(()=>{
-    if(!input || !/[+\-*/]$/.test(input)){
-      const output=evaluteExpression(input);
-      setResult(output);
-    } else {
-      setResult("");
-    }
-  },[input]);
+  // React.useEffect(()=>{
+  //   if(!input || !/[+\-*/]$/.test(input)){
+  //     const output=evaluteExpression(input);
+  //     setResult(output);
+  //   } else {
+  //     setResult("");
+  //   }
+  // },[input]);
   return (
     <div className="calculator">
       <h1>React Calculator</h1>
@@ -83,15 +83,16 @@ const evaluteExpression =(expression)=>{
             <button key={index} onClick={clearInput}>
               {btn}
             </button>
-              ):(
-                <button key={index} onClick={()=>appendValue(btn)}>
+              ): btn === "=" ?(
+                <button key={index} onClick={calculate}>
                   {btn}
                 </button>
-              )
-          )}
-           {/* <button className="equal-btn" onClick={calculate}>
-            =
-            </button>   */}
+              ) : (
+           <button key={index} onClick={()=>appendValue(btn)} >
+            {btn}
+            </button>
+            )
+        )}       
         {/* </div>*/}
       </div>
      </div> 
