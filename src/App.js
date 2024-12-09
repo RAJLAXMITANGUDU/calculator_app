@@ -36,13 +36,21 @@ const evaluteExpression =(expression)=>{
     setResult("");
   };
   const calculate=()=>{
-    if(!input){
+    if(!input || /[+\-*/]$/.test(input)){
       setResult("Error");
       return ;
     }
     const output=evaluteExpression(input);
     setResult(output);
   };
+  React.useEffect(()=>{
+    if(!input || !/[+\-*/]$/.test(input)){
+      const output=evaluteExpression(input);
+      setResult(output);
+    } else {
+      setResult("");
+    }
+  },[input]);
   return (
     <div className="calculator">
       <h1>React Calculator</h1>
@@ -81,9 +89,9 @@ const evaluteExpression =(expression)=>{
                 </button>
               )
           )}
-           <button className="equal-btn" onClick={calculate}>
+           {/* <button className="equal-btn" onClick={calculate}>
             =
-            </button>  
+            </button>   */}
         {/* </div>*/}
       </div>
      </div> 
